@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid'
 
 import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 
 
@@ -36,9 +37,11 @@ export class App extends Component {
 
   handleChange = (event) => {
     const name = event.target.value
+    const filteredContacts = this.state.contacts.filter((contact) => contact.name.includes(name));
     this.setState(
       {name}
     )
+    console.log(filteredContacts);
   }
 
   render() {
@@ -50,6 +53,10 @@ export class App extends Component {
           handleChange={this.handleChange}
         />
         <h2>Contacts</h2>
+        <Filter
+          contacts={this.state.contacts}
+          handleChange={this.handleChange}
+        />
         <ContactList
           contacts={this.state.contacts}
         />
