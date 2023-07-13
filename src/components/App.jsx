@@ -13,7 +13,7 @@ export class App extends Component {
     super(props)
     this.state = {
       contacts: [],
-      name: ''
+      filter: ''
     };
   }
 
@@ -24,25 +24,42 @@ export class App extends Component {
     const name = target.elements.name.value
     const number = target.elements.number.value
     const id = nanoid()
+
     
     const { contacts } = this.state
     const newContact = { name, number, id }
     
-    this.setState({contacts: [...contacts, newContact]})
+    const isContact = contacts.find((contact) => contact.name === name)
+    if (Boolean(isContact)) {
+      alert(`${name} is already in contacts`)
+      return
+    }
     
+    
+    
+    this.setState({contacts: [...contacts, newContact]})
+
     target.elements.name.value = '';
     target.elements.number.value = '';
     
   }
 
   handleChange = (event) => {
-    const name = event.target.value
-    const filteredContacts = this.state.contacts.filter((contact) => contact.name.includes(name));
+    const name = event.target.value.toLowerCase()
+    const filteredContacts = this.state.contacts.filter((contact) => contact.name.toLowerCase().includes(name));
     this.setState(
-      {name}
+      {filter: filteredContacts}
     )
-    console.log(filteredContacts);
+    
   }
+
+  deleteContact = (contactId) => {
+    this.setState((prevState) => ({
+    contacts: prevState.contacts.filter((contact) => contact.id !== contactId),
+  }));
+  }
+
+
 
   render() {
     return (
@@ -59,6 +76,8 @@ export class App extends Component {
         />
         <ContactList
           contacts={this.state.contacts}
+          filter={this.state.filter}
+          onDeleteContact={this.deleteContact}
         />
       </div>
     );  
