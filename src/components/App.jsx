@@ -9,39 +9,23 @@ import { ContactList } from './ContactList/ContactList';
 
 
 export class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+  state = {
       contacts: [],
       filter: ''
     };
-  }
+  
 
  
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const target = event.currentTarget
-    const name = target.elements.name.value
-    const number = target.elements.number.value
-    const id = nanoid()
+  handleSubmit(state) {
 
     
-    const { contacts } = this.state
-    const newContact = { name, number, id }
+   
+    const id = nanoid()    
+    const {name, number} = state
+    const newContact = {name, number, id}
     
-    const isContact = contacts.find((contact) => contact.name === name)
-    if (Boolean(isContact)) {
-      alert(`${name} is already in contacts`)
-      return
-    }
-    
-    
-    
-    this.setState({contacts: [...contacts, newContact]})
-
-    target.elements.name.value = '';
-    target.elements.number.value = '';
-    
+    this.setState({contacts: [...this.state.contacts, newContact]})
+   
   }
 
   handleChange = (event) => {
@@ -66,8 +50,7 @@ export class App extends Component {
       <div>
         <h1>Phonebook</h1>
         <ContactForm
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit.bind(this)}
         />
         <h2>Contacts</h2>
         <Filter
