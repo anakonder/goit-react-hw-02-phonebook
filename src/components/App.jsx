@@ -24,7 +24,6 @@ export class App extends Component {
     const { name, number } = state
     
     const { contacts } = this.state
-    // console.log("aur contacts",contacts)
     if (Boolean(contacts.find(contact => contact.name === name))) {
       alert(`${name} is already in contacts`)
       return
@@ -40,7 +39,6 @@ export class App extends Component {
 
   handleFilterChange = (event) => {
     const name = event.target.value.toLowerCase()
-    // const filteredContacts = this.state.contacts.filter((contact) => contact.name.toLowerCase().includes(name));
     this.setState(
       {filter: name}
     )
@@ -48,11 +46,7 @@ export class App extends Component {
   }
 
   filterContacts(filter) {
-    if (filter === "") {
-      return  this.state.contacts
-    } else {
-      return this.state.contacts.filter((contact) => contact.name.toLowerCase().includes(filter))
-    }
+         return this.state.contacts.filter((contact) => contact.name.toLowerCase().includes(filter))
   }
 
   deleteContact = (contactId) => {
