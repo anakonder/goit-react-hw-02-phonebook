@@ -1,8 +1,8 @@
-export const Filter = ({contacts, handleChange}) => {
+export const Filter = ({handleFilterChange}) => {
     return (
         <>
             <p>Find contacts by name</p>
-            <input type="text" name="filter" onChange={handleChange}/>
+            <input type="text" name="filter" onChange={handleFilterChange}/>
         </>
     )
 }
